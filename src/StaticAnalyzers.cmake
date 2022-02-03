@@ -41,7 +41,21 @@ macro(enable_cppcheck CPPCHECK_OPTIONS)
 endmacro()
 
 macro(enable_clang_tidy)
-  find_program(CLANGTIDY clang-tidy)
+  # https://github.com/ejfitzgerald/clang-tidy-cache
+  find_program(
+    CLANGTIDY_CACHE
+    NAMES "clang-tidy-cache"
+          "clang-tidy-cache-windows-amd64"
+          "clang-tidy-cache-linux-amd64"
+          "clang-tidy-cache-darwin-amd64")
+  if(CLANGTIDY_CACHE)
+    # use clang-tidy-cache if found
+    set($ENV{CLANG_TIDY_CACHE_BINARY} ${CLANGTIDY_CACHE})
+    set(CLANGTIDY ${CLANGTIDY_CACHE})
+  else()
+    # otherwise use clang-tidy directly
+    find_program(CLANGTIDY clang-tidy)
+  endif()
   if(CLANGTIDY)
     if(NOT
        CMAKE_CXX_COMPILER_ID
