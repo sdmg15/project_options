@@ -70,7 +70,7 @@ set(INCLUDE_DIR "./include")
 # TODO are these generator expressions needed? If so, refactor this to a function
 target_include_directories(lib INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${INCLUDE_DIR}>"
                                          "$<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}>")
-target_link_libraries(main INTERFACE project_options project_warnings)
+target_link_libraries(lib INTERFACE project_options project_warnings)
 target_link_system_libraries(
   lib
   INTERFACE
@@ -86,10 +86,10 @@ package_project(
   # lib
   # project_warnings
   # project_options
-  PUBLIC_DEPENDENCIES_CONFIGURED
-  ${DEPENDENCIES_CONFIGURED}
-  PUBLIC_INCLUDES
-  ${INCLUDE_DIR})
+  # PUBLIC_DEPENDENCIES_CONFIGURED
+  # ${DEPENDENCIES_CONFIGURED}
+  # PUBLIC_INCLUDES ${INCLUDE_DIR}
+)
 
 # package separately (for testing)
 package_project(
